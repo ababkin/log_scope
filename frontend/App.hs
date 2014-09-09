@@ -9,23 +9,30 @@
   {- request `addChild` requests -}
 
 import Haste.App
-import qualified Haste.App.Concurrent as H
+import System.IO (getLine)
 
 main :: IO ()
 main = do
   runApp (mkConfig "ws://localhost:24601" 24601) $ do
 
-    request <- remote $ do
-      liftIO $ return "hello"
+    getRequest <- remote $ do
+      liftIO getLine
 
-    runClient $ withElem "requests" $ \requests -> do
-      req <- onServer $ request
-      request <- newElem "div"
-      requestText <- newTextElem req
-      requestText `addChild` request
-      request `addChild` requests
-      {- setProp request "html" req -}
+    runClient $ withElem "requests" (renderRequest getRequest)
+      where
+        renderRequest getRequest requests = do
+          req <- onServer getRequest
+          request <- newElem "div"
+          requestText <- newTextElem req
+          requestText `addChild` request
+          request `addChild` requests
+          renderRequest getRequest requests
 
-      {- req <- onServer $ request -}
-      {- alert $ "The req is: " ++ req -}
+
+
+
+          {- setProp request "html" req -}
+
+          {- req <- onServer $ request -}
+          {- alert $ "The req is: " ++ req -}
 

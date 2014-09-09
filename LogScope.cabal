@@ -1,0 +1,27 @@
+name:                LogScope
+version:             0.1.0.0
+-- synopsis:            
+-- description:         
+-- license:             
+license:             AllRightsReserved
+author:              Alex Babkin
+maintainer:          ababkin@gmail.com
+-- copyright:           
+-- category:            
+build-type:          Simple
+cabal-version:       >=1.8
+
+executable LogScope
+  hs-source-dirs: src
+  main-is:        Main.hs
+  ghc-options:    -static -Wall
+  build-depends:
+      base >= 4 && <= 5
+    , text
+    , attoparsec
+    , pipes
+    , pipes-attoparsec
+    , pipes-parse
+    , pipes-text
+    , transformers
+

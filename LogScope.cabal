@@ -24,4 +24,5 @@ executable LogScope
     , pipes-parse
     , pipes-text
     , transformers
+    , haste-compiler
 

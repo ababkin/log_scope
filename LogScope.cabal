@@ -11,18 +11,40 @@ maintainer:          ababkin@gmail.com
 build-type:          Simple
 cabal-version:       >=1.8
 
+Flag Haste-inst
+  Description: either if it is being compiled with haste-inst or with cabal
+  Default: False
+
 executable LogScope
-  hs-source-dirs: src
-  main-is:        Main.hs
-  ghc-options:    -static -Wall
-  build-depends:
-      base >= 4 && <= 5
-    , text
-    , attoparsec
-    , pipes
-    , pipes-attoparsec
-    , pipes-parse
-    , pipes-text
-    , transformers
-    , haste-compiler
+  if flag(haste-inst)
+    hs-source-dirs: src .
+    main-is: Main.hs
+    buildable: True
+    ghc-options: --output-html
+    build-depends: 
+        base >4.0 && <5
+      , text
+      -- , attoparsec
+      , pipes
+      -- , pipes-attoparsec
+      , pipes-parse
+      -- , pipes-text
+      , transformers
+      , haste-lib
+  else
+    hs-source-dirs: src
+    main-is:        Main.hs
+    ghc-options:    -static -Wall
+    buildable: True
+    build-depends:
+        base >= 4 && <= 5
+      , text
+      , attoparsec
+      , pipes
+      , pipes-attoparsec
+      , pipes-parse
+      , pipes-text
+      , transformers
+      , haste-compiler
+
 

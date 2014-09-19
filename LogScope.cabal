@@ -24,11 +24,6 @@ executable LogScope
     build-depends: 
         base >4.0 && <5
       , text
-      -- , attoparsec
-      , pipes
-      -- , pipes-attoparsec
-      , pipes-parse
-      -- , pipes-text
       , transformers
       , haste-lib
   else

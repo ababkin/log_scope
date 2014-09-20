@@ -17,7 +17,7 @@ Flag Haste-inst
 
 executable LogScope
   if flag(haste-inst)
-    hs-source-dirs: src .
+    hs-source-dirs: src
     main-is: Main.hs
     buildable: True
     ghc-options: --output-html

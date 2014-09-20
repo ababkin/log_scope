@@ -2,12 +2,10 @@
 
 module Parsers where
 
-import           Control.Applicative       (many, (*>), (<$>), (<*), (<*>),
-                                            (<|>))
+import           Control.Applicative  (many, (*>), (<$>), (<*), (<*>), (<|>))
 import           Control.Monad
-import           Data.Attoparsec.Text      (Parser (..), char, endOfLine,
-                                            isEndOfLine, skipWhile, string,
-                                            takeTill)
+import           Data.Attoparsec.Text (Parser (..), char, endOfLine,
+                                       isEndOfLine, skipWhile, string, takeTill)
 import           Data.Text
 
 import           Types

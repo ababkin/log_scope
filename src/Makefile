@@ -1,17 +1,14 @@
-all: Main Main.js
+all: LogScope.js
 
-Main.js: Main.hs
-	hastec Main.hs
-
-Main:
-	ghc --make Main.hs
+LogScope.js: LogScope.hs
+	hastec LogScope.hs -main-is LogScope
 
 clean:
 	-rm -r main
 	-rm *~
-	-rm Main.hi
-	-rm Main.o
+	-rm LogScope.hi
+	-rm LogScope.o
 
 distclean: clean
-	-rm Main
-	-rm Main.js
+	-rm LogScope
+	-rm LogScope.js

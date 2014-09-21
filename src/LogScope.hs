@@ -84,9 +84,10 @@ main = do
             addRequest req requestsContainer = do
               request <- newElem "div"
 
-              alert (unpack $ path req)
-              addTextElWithClasses "span" (unpack $ action req) ["label", verbCssClass req] request
-              {- addTextElWithClasses "span" (unpack $ path req) [] request -}
+              appendTextElWithClasses "span" (verb req) ["label", verbCssClass req] request
+              appendTextElWithClasses "div"  (path req) ["path"] request
+              appendTextElWithClasses "div"  (controller req) ["controller"] request
+              appendTextElWithClasses "div"  (action req) ["action"] request
 
               setClass request "request" True
               request `addChild` requestsContainer
@@ -96,7 +97,7 @@ main = do
 
 
               where
-                verbCssClass request = case unpack $ verb req of
+                verbCssClass request = case verb req of
                   "GET"     -> "get"
                   "POST"    -> "post"
                   "PUT"     -> "put"
@@ -106,8 +107,8 @@ main = do
                 toggleRequestExpand request = do
                   toggleClass request "expanded"
 
-                addTextElWithClasses :: MonadIO m => String -> String -> [String] -> Elem -> m ()
-                addTextElWithClasses tag text cssClasses parent = do
+                appendTextElWithClasses :: MonadIO m => String -> String -> [String] -> Elem -> m ()
+                appendTextElWithClasses tag text cssClasses parent = do
                   el <- newElem tag
 
                   textEl <- newTextElem text
@@ -125,7 +126,8 @@ main = do
               errText <- newTextElem errorText
               errText `addChild` err
 
-              setClass err "alert alert-danger" True
+              setClass err "alert" True
+              setClass err "alert-danger" True
               err `addChild` requestsContainer
 
 

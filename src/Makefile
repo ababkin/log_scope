@@ -8,6 +8,7 @@ clean:
 	-rm *~
 	-rm LogScope.hi
 	-rm LogScope.o
+	-rm LogScope.js
 
 distclean: clean
 	-rm LogScope

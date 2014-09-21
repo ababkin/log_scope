@@ -6,9 +6,9 @@ import           Control.Applicative  (many, (*>), (<$>), (<*), (<*>), (<|>))
 import           Control.Monad
 import           Data.Attoparsec.Text (Parser (..), char, endOfLine,
                                        isEndOfLine, skipWhile, string, takeTill)
-import           Data.Text
+import           Data.Text            (Text, unpack)
 
-import           Types
+import           Types                (Request (..))
 
 
 requestParser :: Parser Request
@@ -21,10 +21,14 @@ requestParser' :: Parser Request
 requestParser' = do
   verb <- requestLineParser
   (controller, action) <- processingByLineParser
-  return $ Request verb "some/path" controller action
+  return $ Request
+    (unpack verb)
+    "some/path"
+    (unpack controller)
+    (unpack action)
 
 
-requestLineParser :: Parser Verb
+requestLineParser :: Parser Text
 requestLineParser =
   (string "Started ") *> (takeTill (==' ')) <* skipWhile (not . isEndOfLine ) <* endOfLine
 

@@ -3,35 +3,33 @@
 module Types where
 
 import           Control.Applicative ((<$>), (<*>))
-import           Data.Text
 import           Haste.JSON
 import           Haste.Serialize
 
-type Verb = Text
-type Path = Text
+type Verb = String
+type Path = String
 
 data Request = Request {
     verb       :: Verb
   , path       :: Path
-  , controller :: Text
-  , action     :: Text
+  , controller :: String
+  , action     :: String
 } deriving Show
-
 
 instance Serialize Request where
   toJSON (Request verb path controller action) = Dict [
-      ("verb", toJSON $ unpack verb)
-    , ("path", toJSON $ unpack path)
-    , ("controller", toJSON $ unpack controller)
-    , ("action", toJSON $ unpack action)
+      ("verb",        toJSON verb)
+    , ("path",        toJSON path)
+    , ("controller",  toJSON controller)
+    , ("action",      toJSON action)
     ]
 
   parseJSON j =
     Request <$>
-        (pack <$> (j .: "path"))
-    <*> (pack <$> (j .: "verb"))
-    <*> (pack <$> (j .: "controller"))
-    <*> (pack <$> (j .: "action"))
+        (j .: "verb")
+    <*> (j .: "path")
+    <*> (j .: "controller")
+    <*> (j .: "action")
 
 {- instance FromJSON Request where -}
   {- parseJSON (Object v) = -}

@@ -22,9 +22,7 @@ executable LogScope
     buildable: True
     ghc-options: --output-html
     build-depends: 
-        base >4.0 && <5
-      , text
-      , transformers
+        base >4 && <5
       , haste-lib
 
   else

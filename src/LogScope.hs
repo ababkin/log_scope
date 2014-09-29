@@ -18,6 +18,7 @@ import           Pipes.Parse               (runStateT)
 import qualified Pipes.Prelude             as P
 import qualified Pipes.Text                as Text
 import qualified Pipes.Text.IO             as Text
+import           Data.Text
 
 import           Parsers
 
@@ -25,7 +26,6 @@ import           Parsers
 
 import           Control.Applicative       ((<$>))
 import           Control.Monad             (join)
-import           Data.Text
 import           Haste                     (Event (..), onEvent)
 import           Haste.App                 (MonadIO, alert)
 import           Haste.DOM                 (Elem, setClass, toggleClass)

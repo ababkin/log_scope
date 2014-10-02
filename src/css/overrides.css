@@ -1,15 +1,10 @@
 .request {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: #aaa;
-
   padding: 10px;
-
   height: 80px;
-
 }
-.request.expanded {
-  height: 200px;
+
+.request span{
+  padding: 5px 20px;
 }
 
 .get {
@@ -26,4 +21,14 @@
 
 .delete {
   background-color: #a00
+}
+
+
+
+.railoscopy #page-wrapper{
+  padding: 0 10px;
+}
+
+.ac-container.panel-body {
+  padding: 10px 0;
 }

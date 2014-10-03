@@ -39,6 +39,10 @@ executable LogScope
       , pipes-parse
       , pipes-text
       , transformers
+      , aeson
+      , lens
+      , network
+      , bytestring
       , haste-compiler
 
 

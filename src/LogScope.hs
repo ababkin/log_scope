@@ -20,7 +20,9 @@ import qualified Pipes.Text                as Text
 import qualified Pipes.Text.IO             as Text
 import           Data.Text
 
+
 import           Parsers
+import UdpServer (startUdpServer)
 
 #endif
 
@@ -32,6 +34,8 @@ import           Haste.DOM                 (Elem, setClass, toggleClass)
 import           Haste.JSON
 import           Haste.Prim
 import           Haste.Serialize
+import           Control.Concurrent      (forkIO)
+import           Control.Concurrent.MVar (MVar (..), newEmptyMVar, putMVar, takeMVar)
 
 import           Types
 import           Client (render)
@@ -40,6 +44,7 @@ import           Client (render)
 #ifdef __HASTE__
 
 requests = undefined
+startUdpServer = undefined
 
 #else
 
@@ -64,6 +69,9 @@ requests = liftIO $ do
 
 main :: IO ()
 main = do
+  reqs <- newEmptyMVar
+  forkIO $ startUdpServer reqs
+
   runApp (mkConfig "ws://localhost:24601" 24601) $ do
 
     getRequest <- remote requests

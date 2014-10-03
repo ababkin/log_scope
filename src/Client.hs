@@ -1,12 +1,11 @@
 module Client (render) where
 
-import           Haste.App                 (addChild, liftIO, mkConfig, newElem,
-                                            newTextElem, onServer, remote,
-                                            runApp, runClient, setClass, setAttr,
+import           Haste.App                 (addChild, newElem,
+                                            newTextElem, onServer,
+                                            setClass, setAttr,
                                             withElem, MonadIO, alert)
 import           Control.Applicative       ((<$>))
 import           Control.Monad             (join)
-import           Haste                     (Event (..), onEvent)
 import           Haste.DOM                 (Elem, setClass, toggleClass)
 import           Haste.JSON
 import           Haste.Prim
@@ -55,10 +54,8 @@ renderRequest n getRequest requestsContainer = do
 
       article <- newElem "article"
       setClass article "ac-small" True
-      p <- newElem "p"
-      textArticle <- newTextElem "more stuff"
-      textArticle `addChild` p
-      p `addChild` article
+      textArticle <- newTextElem $ (controller req) ++ "#" ++ (action req)
+      textArticle `addChild` article
       article `addChild` request
 
 
@@ -80,8 +77,8 @@ renderRequest n getRequest requestsContainer = do
           "DELETE"  -> "delete"
           _         -> "unexpected_verb"
 
-        toggleRequestExpand request = do
-          toggleClass request "expanded"
+        {- toggleRequestExpand request = do -}
+          {- toggleClass request "expanded" -}
 
         appendTextElWithClasses :: MonadIO m => String -> String -> [String] -> Elem -> m ()
         appendTextElWithClasses tag text cssClasses parent = do

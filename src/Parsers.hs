@@ -5,7 +5,7 @@ module Parsers where
 import           Control.Applicative  (many, (*>), (<$>), (<*), (<*>), (<|>))
 import           Control.Monad
 import           Data.Attoparsec.Text (Parser (..), char, endOfLine,
-                                       isEndOfLine, skipWhile, string, takeTill)
+                                       isEndOfLine, skipWhile, string, takeTill, space, char)
 import           Data.Text            (Text, unpack)
 
 import           Types                (Request (..))
@@ -19,18 +19,25 @@ requestParser =
 
 requestParser' :: Parser Request
 requestParser' = do
-  verb <- requestLineParser
+  (verb, path) <- requestLineParser
   (controller, action) <- processingByLineParser
   return $ Request
     (unpack verb)
-    "some/path"
+    (unpack path)
     (unpack controller)
     (unpack action)
 
 
-requestLineParser :: Parser Text
-requestLineParser =
-  (string "Started ") *> (takeTill (==' ')) <* skipWhile (not . isEndOfLine ) <* endOfLine
+requestLineParser :: Parser (Text, Text)
+requestLineParser = do
+  (string "Started ")
+  verb <- takeTill (==' ')
+  space
+  char '"'
+  path <- takeTill (=='"')
+  skipWhile (not . isEndOfLine )
+  endOfLine
+  return (verb, path)
 
 {- requestLineParser :: Parser Text -}
 {- requestLineParser = -}

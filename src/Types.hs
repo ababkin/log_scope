@@ -14,14 +14,16 @@ data Request = Request {
   , path       :: Path
   , controller :: String
   , action     :: String
+  , statusCode :: Int
 } deriving Show
 
 instance Serialize Request where
-  toJSON (Request verb path controller action) = Dict [
+  toJSON (Request verb path controller action statusCode) = Dict [
       ("verb",        toJSON verb)
     , ("path",        toJSON path)
     , ("controller",  toJSON controller)
     , ("action",      toJSON action)
+    , ("status",      toJSON statusCode)
     ]
 
   parseJSON j =
@@ -30,6 +32,7 @@ instance Serialize Request where
     <*> (j .: "path")
     <*> (j .: "controller")
     <*> (j .: "action")
+    <*> (j .: "status")
 
 {- instance FromJSON Request where -}
   {- parseJSON (Object v) = -}

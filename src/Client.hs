@@ -1,17 +1,18 @@
 module Client (render) where
 
-import           Haste.App                 (addChild, newElem,
-                                            newTextElem, onServer,
-                                            setClass, setAttr,
-                                            withElem, MonadIO, alert)
-import           Control.Applicative       ((<$>))
-import           Control.Monad             (join)
-import           Haste.DOM                 (Elem, setClass, toggleClass)
-import           Haste.JSON
+import           Control.Applicative ((<$>))
+import           Control.Monad       (join)
+import           Haste.App           (MonadIO, addChild, alert, liftIO, newElem,
+                                      newTextElem, onServer, setAttr, setClass,
+                                      withElem)
+import           Haste.DOM           (Elem, setClass, toggleClass)
+import           Haste.JSON          (decodeJSON)
+import           Haste.Perch         (atr, build, div, p, (!))
 import           Haste.Prim
 import           Haste.Serialize
+import           Prelude             hiding (div, (!))
 
-import Types
+import           Types
 
 render = renderRequest 0
 
@@ -26,7 +27,8 @@ renderRequest n getRequest requestsContainer = do
       renderRequest (n + 1) getRequest requestsContainer
 
   where
-    addRequest :: MonadIO m => Request -> Elem -> m ()
+    {- addRequest :: MonadIO m => Request -> Elem -> m () -}
+    {- addRequest :: Request -> Elem -> Client () -}
     addRequest req requestsContainer = do
       request <- newElem "a"
 
@@ -37,36 +39,57 @@ renderRequest n getRequest requestsContainer = do
       setAttr input "id" $ requestId n
       setAttr input "name" "accordion-1"
       setAttr input "type" "checkbox"
-      input `addChild` request
+      addChild input request
 
       label <- newElem "label"
       setAttr label "for" $ requestId n
-      
-      requestShort <- newElem "span"
-      appendTextElWithClasses "span" (verb req) ["label", verbCssClass req] requestShort
-      appendTextElWithClasses "span"  (path req) ["path", "pull-right", "text-muted", "small"] requestShort
+
+      requestBrief <- newElem "span"
+      appendTextElWithClasses "span" (verb req) ["label", verbCssClass req] requestBrief
+      appendTextElWithClasses "span"  (path req) ["path", "text-muted", "small"] requestBrief
+      appendTextElWithClasses "span"  (path req) ["timestamp", "pull-right", "text-muted", "small"] requestBrief
       {- appendTextElWithClasses "span"  (controller req) ["controller"] requestShort -}
       {- appendTextElWithClasses "span"  (action req) ["action"] requestShort -}
 
-      setClass requestShort "request" True
-      requestShort `addChild` label
-      label `addChild` request
+      setClass requestBrief "request" True
+      addChild requestBrief label
+      addChild label request
 
       article <- newElem "article"
       setClass article "ac-small" True
-      textArticle <- newTextElem $ (controller req) ++ "#" ++ (action req)
-      textArticle `addChild` article
-      article `addChild` request
-
-
-
-      request `addChild` requestsContainer
+      requestDetails req article
+      addChild article request
+      addChild request requestsContainer
 
       {- onEvent request OnClick $ \_ _ -> toggleRequestExpand request -}
       return ()
 
 
       where
+        {- requestDetails :: MonadIO m => Request -> Elem -> m Elem -}
+        {- requestDetails :: Request -> Elem -> Client Elem -}
+        requestDetails req parent = do
+          {- table <- newElem "table" -}
+          {- addChild () -}
+          {- newTextElem $ (controller req) ++ "#" ++ (action req) -}
+          {- addChild table parent -}
+
+
+{- withElem "blah" :: MonadIO m => (Elem -> m a) -> m a -}
+
+
+{- build :: Elem -> IO Elem -}
+
+         liftIO $ build detailsPerch parent
+            where
+              detailsPerch = do
+                div $ do
+                  {- addEvent this OnClick $ \_ _ -> alert "hello, world!" -}
+                  div $ do
+                    p "hello"
+                    p ! atr "style" "color:red" $ "world"
+
+
         requestId :: Int -> String
         requestId n = "ac-" ++ (show n)
 

@@ -7,6 +7,10 @@
   padding: 5px 20px;
 }
 
+.request span {
+  padding: 10px;
+}
+
 .get {
   background-color: #0a0
 }

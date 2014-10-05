@@ -1,0 +1,13 @@
+{
+  "source_type":"rails",
+  "event_type":"sql.active_record",
+  "payload":{
+    "sql":"SELECT  \"users\".* FROM \"users\"  WHERE \"users\".\"id\" = 1  ORDER BY \"users\".\"id\" ASC LIMIT 1",
+    "name":"User Load",
+    "connection_id":70156880452880,
+    "binds":[]
+  },
+  "timestamp":"10:20:02:(261)",
+  "start_milliseconds":1412518802261,
+  "duration":0
+}

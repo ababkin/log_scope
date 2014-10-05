@@ -4,8 +4,9 @@ module Parsers where
 
 import           Control.Applicative  (many, (*>), (<$>), (<*), (<*>), (<|>))
 import           Control.Monad
-import           Data.Attoparsec.Text (Parser (..), char, endOfLine,
-                                       isEndOfLine, skipWhile, string, takeTill, space, char)
+import           Data.Attoparsec.Text (Parser (..), char, char, endOfLine,
+                                       isEndOfLine, skipWhile, space, string,
+                                       takeTill)
 import           Data.Text            (Text, unpack)
 
 import           Types                (Request (..))
@@ -26,6 +27,7 @@ requestParser' = do
     (unpack path)
     (unpack controller)
     (unpack action)
+    0
 
 
 requestLineParser :: Parser (Text, Text)
@@ -61,3 +63,5 @@ processingByLineParser = do
   skipWhile (not . isEndOfLine)
   endOfLine
   return (controller, action)
+
+

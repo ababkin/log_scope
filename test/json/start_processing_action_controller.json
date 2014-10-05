@@ -1,0 +1,15 @@
+{
+  "source_type":"rails",
+  "event_type":"start_processing.action_controller",
+  "payload":{
+    "controller":"AdsController",
+    "action":"index","params":
+      {"controller":"ads","action":"index"},
+    "format":"html",
+    "method":"GET",
+    "path":"/"
+  },
+  "timestamp":"10:20:02:(259)",
+  "start_milliseconds":1412518802259,
+  "duration":0
+}

@@ -58,10 +58,10 @@
   transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
 }
 .ac-container input:checked ~ article.ac-small{
-  height: 140px;
+  height: 180px;
 }
 .ac-container input:checked ~ article.ac-medium{
-  height: 180px;
+  height: 200px;
 }
 .ac-container input:checked ~ article.ac-large{
   height: 230px;

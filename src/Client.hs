@@ -7,7 +7,8 @@ import           Haste.App           (MonadIO, addChild, alert, liftIO, newElem,
                                       withElem)
 import           Haste.DOM           (Elem, setClass, toggleClass)
 import           Haste.JSON          (decodeJSON)
-import           Haste.Perch         (atr, build, div, p, (!))
+import           Haste.Perch         (atr, build, div, p, table, tbody, td, tr,
+                                      (!))
 import           Haste.Prim
 import           Haste.Serialize
 import           Prelude             hiding (div, (!))
@@ -69,25 +70,28 @@ renderRequest n getRequest requestsContainer = do
         {- requestDetails :: MonadIO m => Request -> Elem -> m Elem -}
         {- requestDetails :: Request -> Elem -> Client Elem -}
         requestDetails req parent = do
-          {- table <- newElem "table" -}
-          {- addChild () -}
-          {- newTextElem $ (controller req) ++ "#" ++ (action req) -}
-          {- addChild table parent -}
-
-
-{- withElem "blah" :: MonadIO m => (Elem -> m a) -> m a -}
-
-
-{- build :: Elem -> IO Elem -}
-
          liftIO $ build detailsPerch parent
             where
               detailsPerch = do
-                div $ do
-                  {- addEvent this OnClick $ \_ _ -> alert "hello, world!" -}
-                  div $ do
-                    p "hello"
-                    p ! atr "style" "color:red" $ "world"
+                div ! atr "class" "table-responsive" $ do
+                  table ! atr "class" "table table-bordered table-striped" $ do
+                    tbody $ do
+                      tr $ do
+                        td "Method"
+                        td $ verb req
+                      tr $ do
+                        td "Controller"
+                        td $ controller req
+                      tr $ do
+                        td "Action"
+                        td $ action req
+                      tr $ do
+                        td "Path"
+                        td $ path req
+                      tr $ do
+                        td "Status"
+                        td $ statusCode req
+
 
 
         requestId :: Int -> String

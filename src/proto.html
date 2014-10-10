@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/overrides.css" rel="stylesheet">
+    <link href="css/accordion.css" rel="stylesheet">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/sb-admin-2.js"></script>
+
+    <script src="LogScope.js" type="text/javascript"></script>
+  </head>
+  <body id="body" class="railoscopy">
+
+    <div id="wrapper">
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-default navbar-static-top affix" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Railoscopy</a>
+        </div>
+        <!-- /.navbar-header -->
+
+
+        <div class="navbar-default sidebar" role="navigation">
+          <div class="sidebar-nav navbar-collapse">
+              <ul class="nav" id="side-menu">
+                  <li class="sidebar-search">
+                      <div class="input-group custom-search-form">
+                          <input type="text" class="form-control" placeholder="Search...">
+                          <span class="input-group-btn">
+                          <!-- <button class="btn btn-default" type="button"> -->
+                              <!-- <i class="fa fa-search"></i> -->
+                          <!-- </button> -->
+                      </span>
+                      </div>
+                      <!-- /input-group -->
+                  </li>
+                  <li>
+                      <a class="active" href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                  </li>
+                  <li>
+                      <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                      <ul class="nav nav-second-level collapse">
+                          <li>
+                              <a href="flot.html">Flot Charts</a>
+                          </li>
+                          <li>
+                              <a href="morris.html">Morris.js Charts</a>
+                          </li>
+                      </ul>
+                      <!-- /.nav-second-level -->
+                  </li>
+                  <li>
+                      <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                  </li>
+                  <li>
+                      <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                  </li>
+                  <li class="">
+                      <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                      <ul class="nav nav-second-level collapse" style="height: 0px;">
+                          <li>
+                              <a href="panels-wells.html">Panels and Wells</a>
+                          </li>
+                          <li>
+                              <a href="buttons.html">Buttons</a>
+                          </li>
+                          <li>
+                              <a href="notifications.html">Notifications</a>
+                          </li>
+                          <li>
+                              <a href="typography.html">Typography</a>
+                          </li>
+                          <li>
+                              <a href="grid.html">Grid</a>
+                          </li>
+                      </ul>
+                      <!-- /.nav-second-level -->
+                  </li>
+                </ul>
+          </div>
+          <!-- /.sidebar-collapse -->
+      </div>
+      <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="panel-group" id="accordion">
+
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title clearfix">
+                  <div data-toggle="collapse" href="#collapseOne">
+
+                    <div class="request">
+                      <span class="label get">
+                        GET
+                      </span>
+                      <span class="path text-muted small">/organizations/when-i-group-you-group</span>
+                      <span class="timestamp pull-right text-muted small">4:33:45</span>
+                    </div>
+
+                  </div>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="table">
+                    <table class="table table-bordered table-striped">
+                      <tbody>
+                        <tr><td>Method</td><td>GET</td></tr>
+                        <tr><td>Controller</td><td>AlertsController</td></tr>
+                        <tr><td>Action</td><td>index</td></tr>
+                        <tr><td>Path</td><td>/alerts?page=3</td></tr>
+                        <tr><td>Status</td><td>200</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- /panel -->
+
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title clearfix">
+                  <div data-toggle="collapse" href="#collapseTwo">
+
+                    <div class="request">
+                      <span class="label get">
+                        GET
+                      </span>
+                      <span class="path text-muted small">/organizations/when-i-group-you-group</span>
+                      <span class="timestamp pull-right text-muted small">4:34:32</span>
+                    </div>
+
+                  </div>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                      <tbody>
+                        <tr><td>Method</td><td>GET</td></tr>
+                        <tr><td>Controller</td><td>AlertsController</td></tr>
+                        <tr><td>Action</td><td>index</td></tr>
+                        <tr><td>Path</td><td>/alerts?page=3</td></tr>
+                        <tr><td>Status</td><td>200</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- /panel -->
+
+            <div id="bottom"></div>
+
+          </div> <!-- /accordion -->
+
+        </div> <!-- /.col -->
+
+      </div> <!-- /.row -->
+
+    </div> <!-- /#page-wrapper -->
+
+  </body>
+</html>
+
+
+

@@ -103,67 +103,144 @@
               <div class="panel-heading">
                 <h4 class="panel-title clearfix">
                   <div data-toggle="collapse" href="#collapseOne">
-
                     <div class="request">
-                      <span class="label get">
-                        GET
-                      </span>
+                      <span class="label get"> GET </span>
                       <span class="path text-muted small">/organizations/when-i-group-you-group</span>
                       <span class="timestamp pull-right text-muted small">4:33:45</span>
                     </div>
-
                   </div>
                 </h4>
               </div>
               <div id="collapseOne" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <div class="table">
-                    <table class="table table-bordered table-striped">
-                      <tbody>
+                  <ul class="nav nav-pills" id="tab-test">
+                    <li class="active" data-toggle="pill">
+                      <a href="#tab-1">
+                       General Info
+                      </a>
+                    </li>
+                    <li data-toggle="pill">
+                      <a href="#tab-2">
+                        Rendered Templates
+                      </a>
+                    </li>
+                    <li data-toggle="pill">
+                      <a href="#tab-3">
+                        SQL
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab-1">
+                      <table class="table general">
+                        <tbody>
                         <tr><td>Method</td><td>GET</td></tr>
                         <tr><td>Controller</td><td>AlertsController</td></tr>
                         <tr><td>Action</td><td>index</td></tr>
                         <tr><td>Path</td><td>/alerts?page=3</td></tr>
                         <tr><td>Status</td><td>200</td></tr>
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab-2">
+                      <table class="table templates">
+                        <tbody>
+                        <tr><td>joan_rivers/style_guide/components/_role_switcher.html.haml</td><td>1.5ms</td></tr>
+                        <tr><td>joan_rivers/style_guide/components/_main_navigation.html.haml</td><td>1.4ms</td></tr>
+                        <tr><td>layouts/_header.haml</td><td>2.8ms</td></tr>
+                        <tr><td>layouts/_flash_template.html</td><td>3.5ms</td></tr>
+                        <tr><td>layouts/_flash.haml</td><td>1.1ms</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab-3">
+                      <table class="table sql">
+                        <tbody>
+                        <tr><td>SELECT 1 AS one FROM "users" INNER JOIN "investor_group_memberships" ON "users"."id" = "investor_group_memberships"."person_id" WHERE "investor_group_memberships"."investor_group_id" = 23 AND "investor_group_memberships"."admin" = 't' AND "users"."id" = 53 LIMIT 1</td><td>1.5ms</td></tr>
+                        <tr><td>SELECT "tags".* FROM "tags" WHERE "tags"."id" = 1329 LIMIT 1</td><td>1.4ms</td></tr>
+                        <tr><td>SELECT 1 AS one FROM "subgroups" INNER JOIN "subgroup_memberships" ON "subgroups"."id" = "subgroup_memberships"."subgroup_id" WHERE "subgroup_memberships"."investor_group_membership_id" = 77 AND "subgroups"."id" = 3 LIMIT 1</td><td>2.8ms</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
+
                 </div>
-              </div>
+              </div> <!-- /.collapse -->
             </div> <!-- /panel -->
+
 
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title clearfix">
                   <div data-toggle="collapse" href="#collapseTwo">
-
                     <div class="request">
-                      <span class="label get">
-                        GET
-                      </span>
+                      <span class="label get"> GET </span>
                       <span class="path text-muted small">/organizations/when-i-group-you-group</span>
-                      <span class="timestamp pull-right text-muted small">4:34:32</span>
+                      <span class="timestamp pull-right text-muted small">4:33:45</span>
                     </div>
-
                   </div>
                 </h4>
               </div>
               <div id="collapseTwo" class="panel-collapse collapse">
                 <div class="panel-body">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                      <tbody>
+                  <ul class="nav nav-pills" id="tab-test">
+                    <li class="active" data-toggle="pill">
+                      <a href="#tab-1">
+                        Item 1
+                      </a>
+                    </li>
+                    <li data-toggle="pill">
+                      <a href="#tab-2">
+                        Item 2
+                      </a>
+                    </li>
+                    <li data-toggle="pill">
+                      <a href="#tab-3">
+                        Item 3
+                      </a>
+                    </li>
+                  </ul>
+                  <div class="tab-content">
+                    <div class="tab-pane active" id="tab-1">
+                      <table class="table general">
+                        <tbody>
                         <tr><td>Method</td><td>GET</td></tr>
                         <tr><td>Controller</td><td>AlertsController</td></tr>
                         <tr><td>Action</td><td>index</td></tr>
                         <tr><td>Path</td><td>/alerts?page=3</td></tr>
                         <tr><td>Status</td><td>200</td></tr>
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab-2">
+                      <table class="table templates">
+                        <tbody>
+                        <tr><td>joan_rivers/style_guide/components/_role_switcher.html.haml</td><td>1.5ms</td></tr>
+                        <tr><td>joan_rivers/style_guide/components/_main_navigation.html.haml</td><td>1.4ms</td></tr>
+                        <tr><td>layouts/_header.haml</td><td>2.8ms</td></tr>
+                        <tr><td>layouts/_flash_template.html</td><td>3.5ms</td></tr>
+                        <tr><td>layouts/_flash.haml</td><td>1.1ms</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="tab-pane" id="tab-3">
+                      <table class="table sql">
+                        <tbody>
+                        <tr><td>joan_rivers/style_guide/components/_role_switcher.html.haml</td><td>1.5ms</td></tr>
+                        <tr><td>joan_rivers/style_guide/components/_main_navigation.html.haml</td><td>1.4ms</td></tr>
+                        <tr><td>layouts/_header.haml</td><td>2.8ms</td></tr>
+                        <tr><td>layouts/_flash_template.html</td><td>3.5ms</td></tr>
+                        <tr><td>layouts/_flash.haml</td><td>1.1ms</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
+
                 </div>
-              </div>
+              </div> <!-- /.collapse -->
             </div> <!-- /panel -->
+
+
 
             <div id="bottom"></div>
 
@@ -175,7 +252,14 @@
 
     </div> <!-- /#page-wrapper -->
 
+  <script>
+    $('#tab-test a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+  </script>
   </body>
+
 </html>
 
 

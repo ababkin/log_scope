@@ -23,7 +23,6 @@
 }
 
 
-
 .railoscopy #page-wrapper{
   padding: 60px 10px 0;
 }
@@ -42,4 +41,27 @@
 
 .panel-group .panel-title {
   cursor: pointer;
+}
+
+.nav-pills>li>a  {
+  padding: 5px 10px;
+}
+
+.tab-content {
+  margin-top: 20px;
+}
+
+.table.general tr td:first-child {
+  width: 190px;
+  color: #aaa;
+}
+
+.table.templates tr td:last-child {
+  width: 100px;
+  color: #aaa;
+}
+
+.table.sql tr td:last-child {
+  width: 100px;
+  color: #aaa;
 }

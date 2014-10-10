@@ -15,13 +15,35 @@ Flag Haste-inst
   Description: either if it is being compiled with haste-inst or with cabal
   Default: False
 
+executable StyleGuide
+  if flag(haste-inst)
+    hs-source-dirs: src
+    main-is: StyleGuide.hs
+    buildable: True
+    ghc-options: --output-html
+    build-depends:
+        base >4 && <5
+      , haste-lib
+      , haste-perch
+
+  else
+    hs-source-dirs: src
+    main-is:        StyleGuide.hs
+    ghc-options:    -static -Wall
+    buildable: True
+    build-depends:
+        base >= 4 && <= 5
+      , haste-compiler
+      , haste-perch
+
+
 executable LogScope
   if flag(haste-inst)
     hs-source-dirs: src
     main-is: Main.hs
     buildable: True
     ghc-options: --output-html
-    build-depends: 
+    build-depends:
         base >4 && <5
       , haste-lib
       , haste-perch

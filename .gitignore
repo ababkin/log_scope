@@ -4,6 +4,7 @@ dist/**/*
 .cabal-sandbox/*
 cabal.sandbox.config
 src/*.hi
+src/*.js
 **/*.o
 *.jsmod
 

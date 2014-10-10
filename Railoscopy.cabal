@@ -1,13 +1,10 @@
-name:                LogScope
+name:                Railoscopy
 version:             0.1.0.0
--- synopsis:            
--- description:         
--- license:             
-license:             AllRightsReserved
+description:         Collection of tools for event logs exploration of applications built with Ruby on Rails framework.
+license:             MIT
+license-file:        LICENSE
 author:              Alex Babkin
 maintainer:          ababkin@gmail.com
--- copyright:           
--- category:            
 build-type:          Simple
 cabal-version:       >=1.8
 
@@ -37,10 +34,10 @@ executable StyleGuide
       , haste-perch
 
 
-executable LogScope
+executable Railoscopy
   if flag(haste-inst)
     hs-source-dirs: src
-    main-is: Main.hs
+    main-is: Railoscopy.hs
     buildable: True
     ghc-options: --output-html
     build-depends:
@@ -50,7 +47,7 @@ executable LogScope
 
   else
     hs-source-dirs: src
-    main-is:        Main.hs
+    main-is:        Railoscopy.hs
     ghc-options:    -static -Wall
     buildable: True
     build-depends:

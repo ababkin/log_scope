@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module LogScope where
+module Main where
 
 import           Haste.App                 (addChild, liftIO, mkConfig, newElem,
                                             newTextElem, onServer, remote,

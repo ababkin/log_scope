@@ -1,15 +1,15 @@
-all: LogScope.js
+all: Railoscopy.js
 
-LogScope.js: LogScope.hs
-	hastec LogScope.hs -main-is LogScope
+LogScope.js: Railoscopy.hs
+	hastec Railoscopy.hs -main-is Railoscopy
 
 clean:
 	-rm -r main
 	-rm *~
-	-rm LogScope.hi
-	-rm LogScope.o
-	-rm LogScope.js
+	-rm Railoscopy.hi
+	-rm Railoscopy.o
+	-rm Railoscopy.js
 
 distclean: clean
-	-rm LogScope
-	-rm LogScope.js
+	-rm Railoscopy
+	-rm Railoscopy.js

@@ -2,6 +2,10 @@
   padding: 10px;
 }
 
+.request.current {
+  background-color: #ffe;
+}
+
 .request .label {
   margin-right: 10px;
 }

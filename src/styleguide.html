@@ -2,13 +2,13 @@
   <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/overrides.css" rel="stylesheet">
-    <link href="css/accordion.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/sb-admin-2.js"></script>
 
+    <script src="js/helpers.js"></script>
     <script src="StyleGuide.js" type="text/javascript"></script>
   </head>
   <body id="body" class="railoscopy">
@@ -16,7 +16,7 @@
     <div id="wrapper">
 
       <!-- Navigation -->
-      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+      <nav class="navbar navbar-default navbar-static-top affix" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -34,12 +34,12 @@
               <ul class="nav" id="side-menu">
                   <li class="sidebar-search">
                       <div class="input-group custom-search-form">
-                          <input type="text" class="form-control" placeholder="Search...">
+                        <input type="text" class="form-control" placeholder="Search...">
                           <span class="input-group-btn">
                           <!-- <button class="btn btn-default" type="button"> -->
                               <!-- <i class="fa fa-search"></i> -->
                           <!-- </button> -->
-                      </span>
+                        </span>
                       </div>
                       <!-- /input-group -->
                   </li>
@@ -86,42 +86,26 @@
                       <!-- /.nav-second-level -->
                   </li>
                 </ul>
-          </div>
+            </div>
           <!-- /.sidebar-collapse -->
-      </div>
+        </div>
       <!-- /.navbar-static-side -->
-    </nav>
+      </nav>
 
-    <div id="page-wrapper" style="min-height: 914px;">
-      <div class="row">
-        <div class="col-lg-12">
+      <div id="page-wrapper" style="min-height: 914px;">
+        <div class="row">
+          <div class="col-lg-12">
+            <div id="requests" class="panel-group">
 
-            <div id="requests" class="panel-body ac-container">
 
-                <!-- <a href="#" class="list-group-item"> -->
-                  <!-- <input id="ac-1" name="accordion-1" type="checkbox"> -->
-                  <!-- <label for="ac-1">About us</label> -->
-                  <!-- <article class="ac-small"> -->
-                    <!-- <p>Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.</p> -->
-                  <!-- </article> -->
-                <!-- </a> -->
-
-                <!-- <a href="#" class="list-group-item"> -->
-                  <!-- <input id="ac-2" name="accordion-1" type="checkbox"> -->
-                  <!-- <label for="ac-2">How we work</label> -->
-                  <!-- <article class="ac-medium"> -->
-                    <!-- <p>Like you, I used to think the world was this great place where everybody lived by the same standards I did, then some kid with a nail showed me I was living in his world, a world where chaos rules not order, a world where righteousness is not rewarded. That's Cesar's world, and if you're not willing to play by his rules, then you're gonna have to pay the price. </p> -->
-                  <!-- </article> -->
-                <!-- </a> -->
 
             </div>
+          </div> <!-- /.col -->
+        </div> <!-- /.row -->
+      </div> <!-- /#page-wrapper -->
 
-        </div> <!-- /.col -->
 
-      </div> <!-- /.row -->
-
-    </div> <!-- /#page-wrapper -->
-
+    </div> <!-- /#wrapper -->
   </body>
 </html>
 

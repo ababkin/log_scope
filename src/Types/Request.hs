@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Types where
+module Types.Request where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Haste.JSON

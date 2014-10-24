@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module RailsEvent where
+module Types.RailsEvent where
 
 import           Control.Applicative ((<$>), (<*>))
 import           Data.Aeson

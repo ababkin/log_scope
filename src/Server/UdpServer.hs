@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module UdpServer where
+module Server.UdpServer where
 
 import           Control.Concurrent.MVar    (MVar (..), putMVar)
 import           Control.Monad
@@ -15,8 +15,8 @@ import           Network.Socket
 import qualified Data.ByteString.Lazy.Char8 as BL
 import qualified Data.Text                  as T
 
-import           RailsEvent
-import           Types
+import           Types.RailsEvent
+import           Types.Request
 
 serveLog :: String              -- ^ Port number or name; 514 is default
          -> (Maybe Request -> String -> IO (Maybe Request))  -- ^ Function to handle incoming messages

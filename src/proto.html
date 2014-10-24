@@ -2,14 +2,11 @@
   <head>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/overrides.css" rel="stylesheet">
-    <link href="css/accordion.css" rel="stylesheet">
     <link href="css/sb-admin-2.css" rel="stylesheet">
 
     <script src="js/jquery-1.11.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/sb-admin-2.js"></script>
-
-    <script src="LogScope.js" type="text/javascript"></script>
   </head>
   <body id="body" class="railoscopy">
 
@@ -95,8 +92,7 @@
     <div id="page-wrapper">
       <div class="row">
         <div class="col-lg-12">
-
-          <div class="panel-group" id="accordion">
+          <div class="panel-group">
 
 
             <div class="panel panel-default">
@@ -253,10 +249,12 @@
     </div> <!-- /#page-wrapper -->
 
   <script>
-    $('#tab-test a').click(function (e) {
-      e.preventDefault()
-      $(this).tab('show')
-    })
+    function initTabs(){
+      $(document).on("click", "#tab-test a", function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+      })
+    }
   </script>
   </body>
 

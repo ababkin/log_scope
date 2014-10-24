@@ -9,7 +9,7 @@ import           Data.Attoparsec.Text (Parser (..), char, char, endOfLine,
                                        takeTill)
 import           Data.Text            (Text, unpack)
 
-import           Types                (Request (..))
+import           Types.Request        (Request (..))
 
 
 requestParser :: Parser Request

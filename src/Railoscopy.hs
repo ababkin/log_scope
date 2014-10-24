@@ -22,7 +22,7 @@ import qualified Pipes.Text.IO             as Text
 
 
 import           Parsers
-import           UdpServer                 (startUdpServer)
+import           Server.UdpServer          (startUdpServer)
 
 #endif
 
@@ -38,8 +38,8 @@ import           Haste.JSON
 import           Haste.Prim
 import           Haste.Serialize
 
-import           Client                    (render)
-import           Types
+import           Client.Client             (render)
+import           Types.Request
 
 
 #ifdef __HASTE__

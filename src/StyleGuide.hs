@@ -3,13 +3,12 @@
 
 module Main where
 
-import           Haste.App                 (addChild, liftIO, mkConfig, newElem,
-                                            newTextElem, onServer, remote,
-                                            runApp, runClient, setClass,
-                                            withElem)
+import           Haste.App     (addChild, liftIO, mkConfig, newElem,
+                                newTextElem, onServer, remote, runApp,
+                                runClient, setClass, withElem)
 
-import Types (Request(..))
-import Client(addRequest)
+import           Client.Client (addRequest)
+import           Types.Request (Request (..))
 
 main :: IO ()
 main = do
@@ -22,7 +21,7 @@ main = do
         , action = "index"
         , statusCode = 200
         }
-        
+
       addRequest req 1 requestsContainer
 
       {- article <- newElem "article" -}

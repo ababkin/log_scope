@@ -14,16 +14,23 @@ data Request = Request {
   , path       :: Path
   , controller :: String
   , action     :: String
+  , format     :: String
   , statusCode :: Int
+  , timestamp  :: String
+  , renderedPartials :: [PartialRendered]
 } deriving Show
 
+
 instance Serialize Request where
-  toJSON (Request verb path controller action statusCode) = Dict [
+  toJSON (Request verb path controller action format statusCode timestamp renderedPartials) = Dict [
       ("verb",        toJSON verb)
     , ("path",        toJSON path)
     , ("controller",  toJSON controller)
     , ("action",      toJSON action)
+    , ("format",      toJSON format)
     , ("status",      toJSON statusCode)
+    , ("timestamp",   toJSON timestamp)
+    , ("renderedPartials", toJSON renderedPartials)
     ]
 
   parseJSON j =
@@ -32,7 +39,32 @@ instance Serialize Request where
     <*> (j .: "path")
     <*> (j .: "controller")
     <*> (j .: "action")
+    <*> (j .: "format")
     <*> (j .: "status")
+    <*> (j .: "timestamp")
+    <*> (j .: "renderedPartials")
+
+
+
+
+data PartialRendered = PartialRendered {
+    prPath       :: String
+  , prTimestamp  :: String
+  , prDuration   :: String
+  } deriving Show
+
+instance Serialize PartialRendered where
+  toJSON (PartialRendered path timestamp duration) = Dict [
+      ("path",        toJSON path)
+    , ("timestamp",   toJSON timestamp)
+    , ("duration",    toJSON duration)
+    ]
+
+  parseJSON j =
+    PartialRendered <$>
+        (j .: "path")
+    <*> (j .: "timestamp")
+    <*> (j .: "duration")
 
 {- instance FromJSON Request where -}
   {- parseJSON (Object v) = -}

@@ -20,8 +20,6 @@ import qualified Pipes.Prelude             as P
 import qualified Pipes.Text                as Text
 import qualified Pipes.Text.IO             as Text
 
-
-import           Parsers
 import           Server.UdpServer          (startUdpServer)
 
 #endif
@@ -80,5 +78,6 @@ main = do
 
   runApp (mkConfig "ws://localhost:24601" 24601) $ do
     getRequest <- remote $ requests reqs
+
     runClient $ withElem "requests" (render getRequest)
 

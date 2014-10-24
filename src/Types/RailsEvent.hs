@@ -23,7 +23,13 @@ data RailsEvent = StartController {
   , timestamp  :: String
   , source     :: String
   , status     :: Int
-  } | Unknown {
+  } | 
+  RenderPartial {
+    rpPath       :: String
+  , rpTimestamp  :: String
+  , rpDuration   :: Integer
+  } |
+  Unknown {
     event_type :: String
   , timestamp  :: String
   , source     :: String
@@ -41,8 +47,9 @@ instance FromJSON RailsEvent where
           <*> payload .: "method"
           <*> payload .: "path"
           <*> payload .: "format"
-          <*> v .: "timestamp"
-          <*> v .: "source_type"
+          <*> v       .: "timestamp"
+          <*> v       .: "source_type"
+      
       "process_action.action_controller" ->
         FinishController <$>
               payload .: "controller"
@@ -50,11 +57,18 @@ instance FromJSON RailsEvent where
           <*> payload .: "method"
           <*> payload .: "path"
           <*> payload .: "format"
-          <*> v .: "timestamp"
-          <*> v .: "source_type"
+          <*> v       .: "timestamp"
+          <*> v       .: "source_type"
           <*> payload .: "status"
+
+      "!render_template.action_view" ->
+        RenderPartial <$>
+              payload .: "virtual_path"
+          <*> v       .: "timestamp"
+          <*> v       .: "duration"
+
       unknown ->
         (Unknown unknown) <$>
-              v .: "timestamp"
-          <*> v .: "source_type"
+              v       .: "timestamp"
+          <*> v       .: "source_type"
 

@@ -7,6 +7,7 @@ import           Haste.Perch     (Perch, a, atr, build, div, h4, li, p, span,
 import           Haste.Prim
 import           Haste.Serialize
 import           Prelude         hiding (div, span, (!))
+import Data.Foldable (foldMap)
 
 import           Types.Request
 
@@ -23,8 +24,8 @@ addRequestPerch req n = do
         div ! atr "data-toggle" "collapse" ! atr "href" (genHref "collapse" n) $ do
           div ! atr "class" "request" $ do
             span ! atr "class" (addVerbClass req "label") $ verb req
-            span ! atr "class" "path text-muted small" $ "link"
-            span ! atr "class" "timestamp pull-right text-muted small" $ "1:30:29"
+            span ! atr "class" "path text-muted small" $ path req
+            span ! atr "class" "timestamp pull-right text-muted small" $ timestamp req
     div ! atr "id" (genId "collapse" n) ! atr "class" "panel-collapse collapse" $ do
       div ! atr "class" "panel-body" $ do
         ul ! atr "id" "tab-test" ! atr "class" "nav nav-pills" $ do
@@ -67,11 +68,24 @@ addRequestPerch req n = do
     renderedTemplatesTable req = do
       table ! atr "class" "table templates" $ do
         tbody $ do
+          foldMap renderPartial (renderedPartials req)
+      where
+        renderPartial partial = do
           tr $ do
-            td "joan_rivers/style_guide/components/_role_switcher.html.haml"
-            td "1.5ms"
+            td $ prPath partial
+            td $ prTimestamp partial
 
     sqlQueriesTable req = do
+      table ! atr "class" "table sql" $ do
+        tbody $ do
+          foldMap renderPartial (sqlQueries req)
+      where
+        renderPartial partial = do
+          tr $ do
+            td $ prPath partial
+            td $ prTimestamp partial
+
+
       table ! atr "class" "table sql" $ do
         tbody $ do
           tr $ do

@@ -56,18 +56,24 @@ notificationHandler requests maybeRequest msg = do
     Nothing -> do
     -- wait for the start of the next request
       case eitherDecode $ BL.pack msg of
-        Right (StartController controller action verb path _ _ _) -> do
+        Right (StartController controller action verb path format timestamp _) -> do
           putStrLn "parsed StartController"
-          return $ Just $ Request verb path controller action 0
-        unexpected -> do
+          return $ Just $ Request verb path controller action format 0 timestamp []
+        Right unexpected -> do
           putStrLn $ "parsed unexpected event with no request in progress: " ++ (show unexpected)
           return Nothing
+        Left err -> do
+          putStrLn $ "failed parsing event: " ++ (show err)
+          return Nothing
+
     Just req -> do
       case eitherDecode $ BL.pack msg of
         Right (FinishController _ _ _ _ _ _ _ sc) -> do
           putStrLn "parsed FinishController"
           putMVar requests $ req{statusCode = sc}
           return Nothing
+        Right (RenderPartial path timestamp duration) -> do
+          return $ Just req{renderedPartials = (PartialRendered path timestamp (show duration)):(renderedPartials req)}
         unexpected -> do
           putStrLn $ "parsed unexpected event in the middle of request: " ++ (show unexpected)
           return maybeRequest

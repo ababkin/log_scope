@@ -39,6 +39,22 @@ import           Haste.Serialize
 import           Client.Client             (render)
 import           Types.Request
 
+import Data.ByteString.Char8 as BS
+import Data.ByteString.Lazy.Char8 as LBS
+import Codec.Compression.Zlib (compress)
+
+{- lazyToStrictBS :: LBS.ByteString -> BS.ByteString -}
+{- lazyToStrictBS x = BS.concat $ LBS.toChunks x -}
+
+lazyToStrictBS :: LBS.ByteString -> BS.ByteString
+lazyToStrictBS = BS.concat . LBS.toChunks
+
+strictToLazyBS :: BS.ByteString -> LBS.ByteString
+strictToLazyBS = LBS.fromChunks . (splitIntoChunks 1024 []) -- . BS.concat
+
+
+splitIntoChunks n ss s  | BS.length s <= n  = (BS.take n s):ss
+                        | otherwise         = (BS.take n s):(splitIntoChunks n ss $ BS.drop n s)
 
 #ifdef __HASTE__
 
@@ -64,7 +80,7 @@ startUdpServer = undefined
     {- return requestJson -}
 
 requests :: MonadIO m => MVar Request -> m String
-requests reqs = liftIO $ (fromJSStr . encodeJSON . toJSON) <$> takeMVar reqs
+requests reqs = liftIO $ (BS.unpack . lazyToStrictBS . compress . strictToLazyBS . BS.pack . fromJSStr . encodeJSON . toJSON) <$> takeMVar reqs
 
 #endif
 

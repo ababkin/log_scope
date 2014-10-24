@@ -18,11 +18,12 @@ data Request = Request {
   , statusCode :: Int
   , timestamp  :: String
   , renderedPartials :: [PartialRendered]
+  , sqlQueries :: [SqlQuery]
 } deriving Show
 
 
 instance Serialize Request where
-  toJSON (Request verb path controller action format statusCode timestamp renderedPartials) = Dict [
+  toJSON (Request verb path controller action format statusCode timestamp renderedPartials sqlQueries) = Dict [
       ("verb",        toJSON verb)
     , ("path",        toJSON path)
     , ("controller",  toJSON controller)
@@ -31,6 +32,7 @@ instance Serialize Request where
     , ("status",      toJSON statusCode)
     , ("timestamp",   toJSON timestamp)
     , ("renderedPartials", toJSON renderedPartials)
+    , ("sqlQueries",  toJSON sqlQueries)
     ]
 
   parseJSON j =
@@ -43,6 +45,7 @@ instance Serialize Request where
     <*> (j .: "status")
     <*> (j .: "timestamp")
     <*> (j .: "renderedPartials")
+    <*> (j .: "sqlQueries")
 
 
 
@@ -50,7 +53,7 @@ instance Serialize Request where
 data PartialRendered = PartialRendered {
     prPath       :: String
   , prTimestamp  :: String
-  , prDuration   :: String
+  , prDuration   :: Int
   } deriving Show
 
 instance Serialize PartialRendered where
@@ -65,6 +68,27 @@ instance Serialize PartialRendered where
         (j .: "path")
     <*> (j .: "timestamp")
     <*> (j .: "duration")
+
+
+data SqlQuery = SqlQuery {
+    sqSql        :: String
+  , sqTimestamp  :: String
+  , sqDuration   :: Int
+  } deriving Show
+
+instance Serialize SqlQuery where
+  toJSON (SqlQuery sql timestamp duration) = Dict [
+      ("sql",         toJSON sql)
+    , ("timestamp",   toJSON timestamp)
+    , ("duration",    toJSON duration)
+    ]
+
+  parseJSON j =
+    SqlQuery <$>
+        (j .: "sql")
+    <*> (j .: "timestamp")
+    <*> (j .: "duration")
+
 
 {- instance FromJSON Request where -}
   {- parseJSON (Object v) = -}

@@ -1,5 +1,6 @@
 module Client.UI.Request (addRequest) where
 
+import Control.Monad (forM)
 import           Haste.App       (Client, MonadIO, liftIO)
 import           Haste.DOM       (Elem)
 import           Haste.Perch     (Perch, a, atr, build, div, h4, li, p, span,
@@ -78,19 +79,12 @@ addRequestPerch req n = do
     sqlQueriesTable req = do
       table ! atr "class" "table sql" $ do
         tbody $ do
-          foldMap renderPartial (sqlQueries req)
+          foldMap renderSqlQuery (sqlQueries req)
       where
-        renderPartial partial = do
+        renderSqlQuery query = do
           tr $ do
-            td $ prPath partial
-            td $ prTimestamp partial
-
-
-      table ! atr "class" "table sql" $ do
-        tbody $ do
-          tr $ do
-            td "SELECT 1 AS one FROM \"users\" INNER JOIN \"investor_group_memberships\" ON \"users\".\"id\" = \"investor_group_memberships\".\"person_id\" WHERE \"investor_group_memberships\".\"investor_group_id\" = 23 AND \"investor_group_memberships\".\"admin\" = 't' AND \"users\".\"id\" = 53 LIMIT 1"
-            td "3.1ms"
+            td $ sqSql query
+            td $ sqTimestamp query
 
 
     addVerbClass req classes =  classes ++ " " ++ (verbCssClass $ verb req)

@@ -58,7 +58,7 @@ notificationHandler requests maybeRequest msg = do
       case eitherDecode $ BL.pack msg of
         Right (StartController controller action verb path format timestamp _) -> do
           putStrLn "parsed StartController"
-          return $ Just $ Request verb path controller action format 0 timestamp []
+          return $ Just $ Request verb path controller action format 0 timestamp [] []
         Right unexpected -> do
           putStrLn $ "parsed unexpected event with no request in progress: " ++ (show unexpected)
           return Nothing
@@ -73,7 +73,12 @@ notificationHandler requests maybeRequest msg = do
           putMVar requests $ req{statusCode = sc}
           return Nothing
         Right (RenderPartial path timestamp duration) -> do
-          return $ Just req{renderedPartials = (PartialRendered path timestamp (show duration)):(renderedPartials req)}
+          return $ Just req{renderedPartials = (replicate 100 (PartialRendered path timestamp duration)) ++ (renderedPartials req)}
+          {- return $ Just req{renderedPartials = (PartialRendered path timestamp duration):(renderedPartials req)} -}
+        Right (Sql timestamp duration) -> do
+          return $ Just req{sqlQueries = replicate 35 $ SqlQuery "" "" 0}
+          {- return $ Just req{sqlQueries = [SqlQuery "joan_rivers/style_guide/components/_main_navigation" "" 0]} -}
+          {- return $ Just req{sqlQueries = (SqlQuery "SELECT \"expertises\".*" "1.45ms" 0):(sqlQueries req)} -}
         unexpected -> do
           putStrLn $ "parsed unexpected event in the middle of request: " ++ (show unexpected)
           return maybeRequest

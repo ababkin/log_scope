@@ -17,14 +17,29 @@ import           Haste.Serialize
 import           Client.UI.Request
 import           Types.Request
 
+import Data.ByteString.Char8 as BS
+import Data.ByteString.Lazy.Char8 as LBS
+import Codec.Compression.Zlib (decompress)
 
 foreign import ccall scrollDown :: IO ()
+
+
+lazyToStrictBS :: LBS.ByteString -> BS.ByteString
+lazyToStrictBS = BS.concat . LBS.toChunks
+
+strictToLazyBS :: BS.ByteString -> LBS.ByteString
+strictToLazyBS = LBS.fromChunks . (splitIntoChunks 1024 []) -- . BS.concat
+
+
+splitIntoChunks n ss s  | BS.length s <= n  = (BS.take n s):ss
+                        | otherwise         = (BS.take n s):(splitIntoChunks n ss $ BS.drop n s)
+
 
 render = renderRequest 0
 
 renderRequest :: Int -> Remote (Server String) -> Elem -> Client ()
 renderRequest n getRequest requestsContainer = do
-  eitherRequest <- decodeJSON . toJSStr <$> onServer getRequest
+  eitherRequest <- decodeJSON . toJSStr . BS.unpack . lazyToStrictBS . decompress . strictToLazyBS . BS.pack <$> onServer getRequest
   case join $ fromJSON <$> eitherRequest of
     Right req -> do
       addRequest req n requestsContainer
@@ -47,3 +62,6 @@ addError errorText requestsContainer = do
   setClass err "alert" True
   setClass err "alert-danger" True
   err `addChild` requestsContainer
+
+
+

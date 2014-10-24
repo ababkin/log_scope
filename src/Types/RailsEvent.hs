@@ -27,7 +27,12 @@ data RailsEvent = StartController {
   RenderPartial {
     rpPath       :: String
   , rpTimestamp  :: String
-  , rpDuration   :: Integer
+  , rpDuration   :: Int
+  } |
+  Sql {
+    {- sSql        :: String -}
+    sTimestamp  :: String
+  , sDuration   :: Int
   } |
   Unknown {
     event_type :: String
@@ -65,6 +70,12 @@ instance FromJSON RailsEvent where
         RenderPartial <$>
               payload .: "virtual_path"
           <*> v       .: "timestamp"
+          <*> v       .: "duration"
+
+      "sql.active_record" ->
+        Sql <$>
+              {- payload .: "sql" -}
+              v       .: "timestamp"
           <*> v       .: "duration"
 
       unknown ->

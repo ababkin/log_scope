@@ -73,26 +73,12 @@ notificationHandler requests maybeRequest msg = do
           putMVar requests $ req{statusCode = sc}
           return Nothing
         Right (RenderPartial path timestamp duration) -> do
-          return $ Just req{renderedPartials = (replicate 100 (PartialRendered path timestamp duration)) ++ (renderedPartials req)}
-          {- return $ Just req{renderedPartials = (PartialRendered path timestamp duration):(renderedPartials req)} -}
-        Right (Sql timestamp duration) -> do
-          return $ Just req{sqlQueries = replicate 35 $ SqlQuery "" "" 0}
-          {- return $ Just req{sqlQueries = [SqlQuery "joan_rivers/style_guide/components/_main_navigation" "" 0]} -}
-          {- return $ Just req{sqlQueries = (SqlQuery "SELECT \"expertises\".*" "1.45ms" 0):(sqlQueries req)} -}
+          return $ Just req{renderedPartials = (PartialRendered path timestamp duration):(renderedPartials req)}
+        Right (Sql sql timestamp duration) -> do
+          return $ Just req{sqlQueries = (SqlQuery sql timestamp duration):(sqlQueries req)}
         unexpected -> do
           putStrLn $ "parsed unexpected event in the middle of request: " ++ (show unexpected)
           return maybeRequest
-
-  {- case eitherDecode (BL.pack msg) :: Either String Notification of -}
-    {- Right n -> -}
-      {- putMVar requests n -}
-
-    {- Left s -> do -}
-      {- putStrLn $ "Cannot parse notification: " ++ msg -}
-      {- putStrLn $ "Error: " ++ s ++ "\n" -}
-
-  {- putStrLn $ "From " ++ show addr ++ ": " ++ msg   -}
-
 
 
 startUdpServer :: MVar Request -> IO ()

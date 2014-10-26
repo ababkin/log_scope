@@ -22,8 +22,8 @@ executable StyleGuide
         base >4 && <5
       , haste-lib
       , haste-perch
-      , bytestring
-      , zlib
+      , monad-loops
+      , split
 
   else
     hs-source-dirs: src
@@ -34,8 +34,8 @@ executable StyleGuide
         base >= 4 && <= 5
       , haste-compiler
       , haste-perch
-      , bytestring
-      , zlib
+      , monad-loops
+      , split
 
 
 executable Railoscopy
@@ -48,8 +48,8 @@ executable Railoscopy
         base >4 && <5
       , haste-lib
       , haste-perch
-      , bytestring
-      , zlib
+      , monad-loops
+      , split
 
   else
     hs-source-dirs: src
@@ -71,7 +71,8 @@ executable Railoscopy
       , bytestring
       , haste-compiler
       , haste-perch
-      , zlib
+      , monad-loops
+      , split
 
 -- cabal install with tests support:
 -- cabal install --enable-tests

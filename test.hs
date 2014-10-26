@@ -1,12 +1,11 @@
-f :: Int -> String -> [String] -> [String]
+import           Control.Applicative ((<$>))
+import           Control.Monad       (foldM, sequence)
+import           Data.Monoid         (Monoid, mconcat)
 
-splitIntoChunks n s ss  | length s <= n = (take n s):ss
-                        | otherwise     = (take n s):(f n (drop n s) ss)
-
-{- inPiecesOf Int -> String -> [String] -}
-{- inPiecesOf n = foldr (\arr str -> (take n str):arr) [] -}
+import           Control.Monad.Loops (unfoldWhileM)
 
 
 
+{- doWhile :: (Monad m, Monoid a) => (a -> Bool) -> m a -> m a -}
+doWhile pr go = (mconcat . takeWhile pr) <$> sequence $ repeat go
 
-{- f :: Int -> String -> (String, String) -}

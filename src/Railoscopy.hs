@@ -9,8 +9,8 @@ import           Haste.App                 (addChild, liftIO, mkConfig, newElem,
                                             withElem)
 #ifndef __HASTE__
 
+import           Control.Monad             (forM_, forever)
 import           Control.Monad.Trans.Class (lift)
-import           Data.Text
 import           Pipes                     (Producer (..), runEffect, yield,
                                             (>->))
 import           Pipes                     (await)
@@ -29,6 +29,7 @@ import           Control.Concurrent        (forkIO)
 import           Control.Concurrent.MVar   (MVar (..), newEmptyMVar, putMVar,
                                             takeMVar)
 import           Control.Monad             (join)
+import           Data.List.Split           (chunksOf)
 import           Haste                     (Event (..), onEvent)
 import           Haste.App                 (MonadIO, alert)
 import           Haste.DOM                 (Elem, setClass, toggleClass)
@@ -39,23 +40,6 @@ import           Haste.Serialize
 import           Client.Client             (render)
 import           Types.Request
 
-import Data.ByteString.Char8 as BS
-import Data.ByteString.Lazy.Char8 as LBS
-import Codec.Compression.Zlib (compress)
-
-{- lazyToStrictBS :: LBS.ByteString -> BS.ByteString -}
-{- lazyToStrictBS x = BS.concat $ LBS.toChunks x -}
-
-lazyToStrictBS :: LBS.ByteString -> BS.ByteString
-lazyToStrictBS = BS.concat . LBS.toChunks
-
-strictToLazyBS :: BS.ByteString -> LBS.ByteString
-strictToLazyBS = LBS.fromChunks . (splitIntoChunks 1024 []) -- . BS.concat
-
-
-splitIntoChunks n ss s  | BS.length s <= n  = (BS.take n s):ss
-                        | otherwise         = (BS.take n s):(splitIntoChunks n ss $ BS.drop n s)
-
 #ifdef __HASTE__
 
 requests = undefined
@@ -63,37 +47,32 @@ startUdpServer = undefined
 
 #else
 
-{- requestPipeParser :: (Monad m) => Producer Text m () -> Producer String m String -}
-{- requestPipeParser s = do -}
-  {- (r,s') <- lift (runStateT (PA.parse requestParser) s) -}
-  {- case r of -}
-    {- Nothing -> return "" -}
-    {- Just (Left err) -> return "" -}
-    {- Just (Right request) -> do -}
-      {- let requestString = fromJSStr $ encodeJSON $ toJSON request -}
-      {- (yield requestString) >> (return requestString) -}
 
-{- requests :: MonadIO m => m String -}
-{- requests = liftIO $ do -}
-    {- requestJson <- runEffect $ do -}
-      {- requestPipeParser Text.stdin >-> await -}
-    {- return requestJson -}
+requests :: MonadIO m => MVar String -> m String
+requests reqChunks = liftIO $ takeMVar reqChunks
 
-requests :: MonadIO m => MVar Request -> m String
-requests reqs = liftIO $ (BS.unpack . lazyToStrictBS . compress . strictToLazyBS . BS.pack . fromJSStr . encodeJSON . toJSON) <$> takeMVar reqs
+maxStringLength = 1024
+
+requestPump :: MVar Request -> MVar String -> IO ()
+requestPump reqs reqChunks = forever $ do
+  reqS <- (fromJSStr . encodeJSON . toJSON) <$> takeMVar reqs
+  forM_ (chunksOf maxStringLength reqS) $ putMVar reqChunks
+  putMVar reqChunks ""
 
 #endif
 
 
 main :: IO ()
 main = do
-  reqs <- newEmptyMVar
+  reqs      <- newEmptyMVar
+  reqChunks <- newEmptyMVar
 #ifndef __HASTE__
   forkIO $ startUdpServer reqs
+  forkIO $ requestPump reqs reqChunks
 #endif
 
   runApp (mkConfig "ws://localhost:24601" 24601) $ do
-    getRequest <- remote $ requests reqs
+    getRequestChunk <- remote $ requests reqChunks
 
-    runClient $ withElem "requests" (render getRequest)
+    runClient $ withElem "requests" (render getRequestChunk)
 

@@ -22,7 +22,7 @@ main = do
         , statusCode = 200
         }
 
-      addRequest req 1 requestsContainer
+      addRequest requestsContainer 1 req
 
       {- article <- newElem "article" -}
       {- addChild article requestsContainer -}

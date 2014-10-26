@@ -1,6 +1,7 @@
 module Client.UI.Request (addRequest) where
 
-import Control.Monad (forM)
+import           Control.Monad   (forM)
+import           Data.Foldable   (foldMap)
 import           Haste.App       (Client, MonadIO, liftIO)
 import           Haste.DOM       (Elem)
 import           Haste.Perch     (Perch, a, atr, build, div, h4, li, p, span,
@@ -8,14 +9,12 @@ import           Haste.Perch     (Perch, a, atr, build, div, h4, li, p, span,
 import           Haste.Prim
 import           Haste.Serialize
 import           Prelude         hiding (div, span, (!))
-import Data.Foldable (foldMap)
 
 import           Types.Request
 
 
-{- addRequest :: MonadIO m => Request -> Elem -> m () -}
-addRequest :: Request -> Int -> Elem -> Client ()
-addRequest req n requestsContainer = liftIO $ build (addRequestPerch req n) requestsContainer >> return ()
+addRequest :: Elem -> Int -> Request -> Client ()
+addRequest requestsContainer n req = liftIO $ build (addRequestPerch req n) requestsContainer >> return ()
 
 addRequestPerch :: Request -> Int -> Perch
 addRequestPerch req n = do
@@ -69,7 +68,7 @@ addRequestPerch req n = do
     renderedTemplatesTable req = do
       table ! atr "class" "table templates" $ do
         tbody $ do
-          foldMap renderPartial (renderedPartials req)
+          foldMap renderPartial $ renderedPartials req
       where
         renderPartial partial = do
           tr $ do
@@ -79,7 +78,7 @@ addRequestPerch req n = do
     sqlQueriesTable req = do
       table ! atr "class" "table sql" $ do
         tbody $ do
-          foldMap renderSqlQuery (sqlQueries req)
+          foldMap renderSqlQuery $ sqlQueries req
       where
         renderSqlQuery query = do
           tr $ do

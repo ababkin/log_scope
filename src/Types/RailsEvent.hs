@@ -23,16 +23,16 @@ data RailsEvent = StartController {
   , timestamp  :: String
   , source     :: String
   , status     :: Int
-  } | 
+  } |
   RenderPartial {
-    rpPath       :: String
-  , rpTimestamp  :: String
-  , rpDuration   :: Int
+    rpPath      :: String
+  , rpTimestamp :: String
+  , rpDuration  :: Int
   } |
   Sql {
-    {- sSql        :: String -}
-    sTimestamp  :: String
-  , sDuration   :: Int
+    sSql       :: String
+  , sTimestamp :: String
+  , sDuration  :: Int
   } |
   Unknown {
     event_type :: String
@@ -54,7 +54,7 @@ instance FromJSON RailsEvent where
           <*> payload .: "format"
           <*> v       .: "timestamp"
           <*> v       .: "source_type"
-      
+
       "process_action.action_controller" ->
         FinishController <$>
               payload .: "controller"
@@ -74,8 +74,8 @@ instance FromJSON RailsEvent where
 
       "sql.active_record" ->
         Sql <$>
-              {- payload .: "sql" -}
-              v       .: "timestamp"
+              payload .: "sql"
+          <*> v       .: "timestamp"
           <*> v       .: "duration"
 
       unknown ->

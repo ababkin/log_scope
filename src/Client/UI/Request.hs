@@ -82,7 +82,7 @@ addRequestPerch req n = do
       where
         renderSqlQuery query = do
           tr $ do
-            td $ sqSql query
+            td ! atr "class" "query" $ sqSql query
             td $ sqTimestamp query
 
 

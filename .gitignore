@@ -3,8 +3,8 @@ dist/**/*
 .DS_Store
 .cabal-sandbox/*
 cabal.sandbox.config
-src/*.hi
-src/*.js
+src/**/*.hi
+src/**/*.js
 **/*.o
 *.jsmod
 

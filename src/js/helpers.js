@@ -6,7 +6,6 @@ $(document).on("click", "#tab-test a", function (e) {
 function scrollDown(){
   $("body").animate({ scrollTop: $("#bottom").offset().top }, 500);
   highlight();
-
 }
 
 function highlight(){

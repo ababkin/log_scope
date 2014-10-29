@@ -9,16 +9,14 @@ import           Data.Monoid         (mconcat)
 import           Haste               hiding (click)
 import           Haste.App           (Client, MonadIO, Remote, Server, addChild,
                                       alert, liftIO, newElem, newTextElem,
-                                      onServer, setAttr, setClass, withElem)
-import           Haste.DOM           (Elem, setClass, toggleClass)
+                                      onServer)
+import           Haste.DOM           (Elem, setClass)
 import           Haste.JSON          (decodeJSON)
-import           Haste.Prim
-import           Haste.Serialize
+import           Haste.Prim          (toJSStr)
+import           Haste.Serialize     (Serialize, fromJSON)
 
-
-
-import           Client.UI.Request
-import           Types.Request
+import           Client.UI.Request   (addRequest)
+import           Types.Request       (Request)
 
 
 

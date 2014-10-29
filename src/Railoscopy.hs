@@ -3,22 +3,13 @@
 
 module Main where
 
-import           Haste.App                 (addChild, liftIO, mkConfig, newElem,
-                                            newTextElem, onServer, remote,
-                                            runApp, runClient, setClass,
+import           Haste.App                 (liftIO, mkConfig, remote,
+                                            runApp, runClient,
                                             withElem)
 #ifndef __HASTE__
 
 import           Control.Monad             (forM_, forever)
 import           Control.Monad.Trans.Class (lift)
-import           Pipes                     (Producer (..), runEffect, yield,
-                                            (>->))
-import           Pipes                     (await)
-import qualified Pipes.Attoparsec          as PA
-import           Pipes.Parse               (runStateT)
-import qualified Pipes.Prelude             as P
-import qualified Pipes.Text                as Text
-import qualified Pipes.Text.IO             as Text
 
 import           Server.UdpServer          (startUdpServer)
 
@@ -28,17 +19,14 @@ import           Control.Applicative       ((<$>))
 import           Control.Concurrent        (forkIO)
 import           Control.Concurrent.MVar   (MVar (..), newEmptyMVar, putMVar,
                                             takeMVar)
-import           Control.Monad             (join)
 import           Data.List.Split           (chunksOf)
-import           Haste                     (Event (..), onEvent)
-import           Haste.App                 (MonadIO, alert)
-import           Haste.DOM                 (Elem, setClass, toggleClass)
-import           Haste.JSON
-import           Haste.Prim
-import           Haste.Serialize
+import           Haste.App                 (MonadIO)
+import           Haste.JSON                (encodeJSON)
+import           Haste.Prim                (fromJSStr)
+import           Haste.Serialize           (toJSON)
 
 import           Client.Client             (render)
-import           Types.Request
+import           Types.Request             (Request)
 
 #ifdef __HASTE__
 

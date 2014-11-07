@@ -39,7 +39,7 @@ startUdpServer = undefined
 requests :: MonadIO m => MVar String -> m String
 requests reqChunks = liftIO $ takeMVar reqChunks
 
-maxStringLength = 4096
+maxStringLength = 2048
 
 requestPump :: MVar Request -> MVar String -> IO ()
 requestPump reqs reqChunks = forever $ do

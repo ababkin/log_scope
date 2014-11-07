@@ -19,7 +19,7 @@ executable StyleGuide
     buildable: True
     ghc-options: --output-html
     build-depends:
-        base >4 && <5
+        base >= 4 && < 5
       , haste-lib
       , haste-perch
       , monad-loops
@@ -31,7 +31,7 @@ executable StyleGuide
     ghc-options:    -static -Wall
     buildable: True
     build-depends:
-        base >= 4 && <= 5
+        base >= 4 && < 5
       , haste-compiler
       , haste-perch
       , monad-loops
@@ -45,7 +45,7 @@ executable Railoscopy
     buildable: True
     ghc-options: --output-html
     build-depends:
-        base >4 && <5
+        base >= 4 && < 5
       , haste-lib
       , haste-perch
       , monad-loops
@@ -57,7 +57,7 @@ executable Railoscopy
     ghc-options:    -static -Wall
     buildable: True
     build-depends:
-        base >= 4 && <= 5
+        base >= 4 && < 5
       , text
       , attoparsec
       , transformers
@@ -85,7 +85,7 @@ test-suite Tasty
   hs-source-dirs:   test, src
   main-is:          Main.hs
   build-depends:
-      base >= 4
+      base >= 4 && < 5
     , tasty
     , tasty-hunit
     , tasty-quickcheck

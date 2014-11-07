@@ -17,6 +17,7 @@ import           Haste.Serialize     (Serialize, fromJSON)
 
 import           Client.UI.Request   (addRequest)
 import           Types.Request       (Request)
+import Types.API (API, Action)
 
 
 
@@ -24,12 +25,12 @@ foreign import ccall scrollDown :: IO ()
 
 render = renderRequest 0
 
-renderRequest :: Int -> Remote (Server String) -> Elem -> Client ()
-renderRequest n getRequestChunk container = do
+renderRequest :: Int -> API -> Elem -> Client ()
+renderRequest n api container = do
   getPayload getRequestChunk >>= either (addError container) (addRequest container n)
 
   liftIO $ scrollDown
-  renderRequest (n + 1) getRequestChunk container
+  renderRequest (n + 1) (getRequestChunk api) container
 
   where
     getPayload :: Serialize a => Remote (Server String) -> Client (Either String a)

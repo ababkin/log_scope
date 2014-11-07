@@ -28,10 +28,16 @@ import           Haste.Serialize           (toJSON)
 import           Client.Client             (render)
 import           Types.Request             (Request)
 
+maxStringLength = 2048
+
 #ifdef __HASTE__
 
 requests = undefined
+openFileInMvim = undefined
+
 startUdpServer = undefined
+nb             = undefined
+
 
 #else
 
@@ -39,7 +45,9 @@ startUdpServer = undefined
 requests :: MonadIO m => MVar String -> m String
 requests reqChunks = liftIO $ takeMVar reqChunks
 
-maxStringLength = 2048
+actionInVim :: MonadIO m => MVar Action -> String -> m ()
+actionInVim action = do
+  putStrLn $ "got action: " ++ (show action)
 
 requestPump :: MVar Request -> MVar String -> IO ()
 requestPump reqs reqChunks = forever $ do
@@ -54,13 +62,16 @@ main :: IO ()
 main = do
   reqs      <- newEmptyMVar
   reqChunks <- newEmptyMVar
+  vimAction <- newEmptyMVar
+  
 #ifndef __HASTE__
   forkIO $ startUdpServer reqs
   forkIO $ requestPump reqs reqChunks
 #endif
 
   runApp (mkConfig "ws://localhost:24601" 24601) $ do
-    getRequestChunk <- remote $ requests reqChunks
+    api <- API  <$> remote (requests reqChunks)
+                <*> remote (actionInVim vimAction)
 
-    runClient $ withElem "requests" (render getRequestChunk)
+    runClient $ withElem "requests" $ render api
 

@@ -63,6 +63,12 @@
 .table.templates tr td:last-child {
   width: 100px;
   color: #aaa;
+  cursor: pointer;
+}
+
+.table.templates tr td:first-child span {
+  color: #55a;
+  cursor: pointer;
 }
 
 .table.sql tr td:last-child {

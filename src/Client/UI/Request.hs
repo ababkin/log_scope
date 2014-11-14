@@ -2,22 +2,23 @@ module Client.UI.Request (addRequest) where
 
 import           Control.Monad   (forM)
 import           Data.Foldable   (foldMap)
-import           Haste.App       (Client, MonadIO, liftIO)
+import           Haste.App       (Client, MonadIO, liftIO, Event(..), onServer, (<.>))
 import           Haste.DOM       (Elem)
-import           Haste.Perch     (Perch, a, atr, build, div, h4, li, p, span,
-                                  table, tbody, td, tr, ul, (!))
+import           Haste.Perch.Client     (Perch, a, atr, build, div, h4, li, p, span,
+                                  table, tbody, td, tr, ul, (!), this, addEvent)
 import           Haste.Prim
 import           Haste.Serialize
 import           Prelude         hiding (div, span, (!))
 
 import           Types.Request
+import           Types.API (API(..))
 
 
-addRequest :: Elem -> Int -> Request -> Client ()
-addRequest requestsContainer n req = liftIO $ build (addRequestPerch req n) requestsContainer >> return ()
+addRequest :: API -> Elem -> Int -> Request -> Client ()
+addRequest api requestsContainer n req = build (addRequestPerch api req n) requestsContainer >> return ()
 
-addRequestPerch :: Request -> Int -> Perch
-addRequestPerch req n = do
+addRequestPerch :: API -> Request -> Int -> Perch
+addRequestPerch api req n = do
   div ! atr "class" "panel panel-default" $ do
     div ! atr "class" "panel-heading" $ do
       h4 ! atr "class" "panel-title clearfix" $ do
@@ -39,7 +40,7 @@ addRequestPerch req n = do
 
         div ! atr "class" "tab-content" $ do
           div ! atr "class" "tab-pane active" ! atr "id" (genId "general_info" n)       $ generalInfoTable req
-          div ! atr "class" "tab-pane"        ! atr "id" (genId "rendered_templates" n) $ renderedTemplatesTable req
+          div ! atr "class" "tab-pane"        ! atr "id" (genId "rendered_templates" n) $ renderedTemplatesTable api req
           div ! atr "class" "tab-pane"        ! atr "id" (genId "sql_queries" n)        $ sqlQueriesTable req
 
   where
@@ -65,14 +66,17 @@ addRequestPerch req n = do
             td "Status"
             td $ statusCode req
 
-    renderedTemplatesTable req = do
+    renderedTemplatesTable :: API -> Request -> Perch
+    renderedTemplatesTable api req = do
       table ! atr "class" "table templates" $ do
         tbody $ do
-          foldMap renderPartial $ renderedPartials req
+          foldMap (renderPartial api) $ renderedPartials req
       where
-        renderPartial partial = do
+        renderPartial api partial = do
           tr $ do
-            td $ prPath partial
+            td $ do
+              this `addEvent` OnClick $ \_ _ -> onServer $ (performActionInVim api) <.> (prPath partial)
+              span $ prPath partial
             td $ prTimestamp partial
 
     sqlQueriesTable req = do

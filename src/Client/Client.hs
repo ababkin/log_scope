@@ -17,7 +17,7 @@ import           Haste.Serialize     (Serialize, fromJSON)
 
 import           Client.UI.Request   (addRequest)
 import           Types.Request       (Request)
-import Types.API (API, Action)
+import Types.API (API(..), Action)
 
 
 
@@ -27,10 +27,10 @@ render = renderRequest 0
 
 renderRequest :: Int -> API -> Elem -> Client ()
 renderRequest n api container = do
-  getPayload getRequestChunk >>= either (addError container) (addRequest container n)
+  getPayload (getRequestChunk api) >>= either (addError container) (addRequest api container n)
 
   liftIO $ scrollDown
-  renderRequest (n + 1) (getRequestChunk api) container
+  renderRequest (n + 1) api container
 
   where
     getPayload :: Serialize a => Remote (Server String) -> Client (Either String a)

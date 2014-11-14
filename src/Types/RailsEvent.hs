@@ -66,9 +66,11 @@ instance FromJSON RailsEvent where
           <*> v       .: "source_type"
           <*> payload .: "status"
 
-      "!render_template.action_view" ->
+      {- "!render_template.action_view" -> -}
+      "render_partial.action_view" ->
         RenderPartial <$>
-              payload .: "virtual_path"
+              {- payload .: "virtual_path" -}
+              payload .: "identifier"
           <*> v       .: "timestamp"
           <*> v       .: "duration"
 
